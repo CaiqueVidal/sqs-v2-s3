@@ -79,7 +79,7 @@ public class Controller {
         try {
             SendMessageRequest sendMessageRequest = SendMessageRequest.builder()
                     .queueUrl(message.getQueue())
-                    .messageBody(longString())
+                    .messageBody(longString(message.getMessage().charAt(0)))
                     .delaySeconds(5)
                     .build();
             sqs.sendMessage(sendMessageRequest);
@@ -118,10 +118,10 @@ public class Controller {
         sqs.deleteMessage(deleteMessageRequest);
     }
 
-    private String longString() {
+    private String longString(Character letter) {
         int stringLength = 300000;
         char[] chars = new char[stringLength];
-        Arrays.fill(chars, 'x');
+        Arrays.fill(chars, letter);
         return new String(chars);
     }
 }
