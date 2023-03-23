@@ -1,6 +1,11 @@
 package br.com.sqsv2s3;
 
 import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
+import software.amazon.awssdk.services.s3.model.ListObjectsResponse;
+import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.model.S3Object;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.*;
 
@@ -13,9 +18,11 @@ import java.util.List;
 public class Controller {
 
     private final SqsClient sqs;
+    private final S3Client s3Client;
 
-    public Controller(SqsClient sqs) {
+    public Controller(SqsClient sqs, S3Client s3Client) {
         this.sqs = sqs;
+        this.s3Client = s3Client;
     }
 
     @PostMapping
